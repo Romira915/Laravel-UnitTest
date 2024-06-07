@@ -1,0 +1,47 @@
+services:
+  app:
+    image: Romira/zenita:v2
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    working_dir: /var/www/app
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_USER: app
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: app
+      IMAGE_BASE_URL: http://localhost:8080
+    volumes:
+      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./:/var/www/app
+    depends_on:
+      - db
+
+  reverse-proxy:
+    image: nginx:1.27-alpine
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/app
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.4
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: app
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: app
+    ports:
+        - "3306:3306"
+    volumes:
+        - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
