@@ -5,7 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },
@@ -44,6 +44,9 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "test": [
+            "phpunit -c phpunit.xml"
         ]
     },
     "extra": {
