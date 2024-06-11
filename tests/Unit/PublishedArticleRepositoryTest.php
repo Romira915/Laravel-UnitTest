@@ -60,6 +60,7 @@ class PublishedArticleRepositoryTest extends TestCase
             'article_id' => $publishedArticle->getId(),
             'image_path' => 'test.jpg'
         ]);
+        $this->assertCount(2, ArticleImage::query()->where('article_id', $publishedArticle->getId())->get());
     }
 
     public function test_存在するエンティティをsaveしたときに更新されること(): void
@@ -136,5 +137,6 @@ class PublishedArticleRepositoryTest extends TestCase
             'article_id' => $publishedArticle->getId(),
             'image_path' => 'updated.jpg'
         ]);
+        $this->assertCount(2, ArticleImage::query()->where('article_id', $publishedArticle->getId())->get());
     }
 }

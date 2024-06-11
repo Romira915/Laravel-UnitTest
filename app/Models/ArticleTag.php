@@ -22,10 +22,6 @@ class ArticleTag extends Model
 
     private function setTag(string $tag_name): void
     {
-//        if (!TagValidator::validate($tag_name)) {
-//            throw new \InvalidArgumentException('Invalid tag name');
-//        }
-
         $this->tag_name = $tag_name;
     }
 
