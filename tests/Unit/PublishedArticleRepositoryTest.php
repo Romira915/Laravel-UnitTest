@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Entities\DomainArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
 use App\Models\ArticleImage;
@@ -27,13 +28,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'test.jpg'
                     ),
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
@@ -75,13 +76,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'test.jpg'
                     ),
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
@@ -101,13 +102,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'updated.jpg'
                     ),
-                    new ArticleImage(
+                    new DomainArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
