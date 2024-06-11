@@ -38,7 +38,7 @@ jobs:
           context: .
           load: true
           push: false
-          tags: "romira/zenita:v2"
+          tags: "romira/zenita:test"
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
