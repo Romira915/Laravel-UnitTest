@@ -7,7 +7,7 @@ namespace App\Infrastructure\Persistence;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Models\Article;
 use App\Models\ArticleDetail;
-use App\Models\ArticleImage;
+use App\Models\ArticleImageEloquent;
 use App\Models\ArticlePublished;
 
 class PublishedArticleRepository
@@ -31,7 +31,7 @@ class PublishedArticleRepository
             'body' => $article->getBody(),
         ], ['article_id'], ['article_id', 'user_id', 'title', 'body']);
 
-        ArticleImage::query()->where('article_id', $article->getId())->delete();
+        ArticleImageEloquent::query()->where('article_id', $article->getId())->delete();
         $upsertValues = [];
         foreach ($article->getImages()->all() as $image) {
             $upsertValues[] = [
@@ -41,6 +41,6 @@ class PublishedArticleRepository
                 'image_path' => $image->getImagePath(),
             ];
         }
-        ArticleImage::query()->upsert($upsertValues, ['id'], ['id', 'article_id', 'user_id', 'image_path']);
+        ArticleImageEloquent::query()->upsert($upsertValues, ['id'], ['id', 'article_id', 'user_id', 'image_path']);
     }
 }

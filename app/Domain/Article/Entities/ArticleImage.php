@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Entities;
 
-readonly class DomainArticleImage
+readonly class ArticleImage
 {
     public function __construct(
         private string $id,

@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Collection;
 
-use App\Domain\Article\Entities\DomainArticleImage;
+use App\Domain\Article\Entities\ArticleImage;
 use InvalidArgumentException;
 
 class ArticleImageList
 {
     const int MAX_IMAGES = 20;
 
-    /** @var DomainArticleImage[] */
+    /** @var ArticleImage[] */
     private array $images = [];
 
     /**
-     * @param DomainArticleImage[] $images
+     * @param ArticleImage[] $images
      * @throws InvalidArgumentException
      */
     public function __construct(
@@ -30,7 +30,7 @@ class ArticleImageList
     }
 
     /**
-     * @return DomainArticleImage[]
+     * @return ArticleImage[]
      */
     public function all(): array
     {

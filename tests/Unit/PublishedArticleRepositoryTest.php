@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use App\Domain\Article\Collection\ArticleImageList;
-use App\Domain\Article\Entities\DomainArticleImage;
+use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
-use App\Models\ArticleImage;
+use App\Models\ArticleImageEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
@@ -28,13 +28,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'test.jpg'
                     ),
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
@@ -60,7 +60,7 @@ class PublishedArticleRepositoryTest extends TestCase
             'article_id' => $publishedArticle->getId(),
             'image_path' => 'test.jpg'
         ]);
-        $this->assertCount(2, ArticleImage::query()->where('article_id', $publishedArticle->getId())->get());
+        $this->assertCount(2, ArticleImageEloquent::query()->where('article_id', $publishedArticle->getId())->get());
     }
 
     public function test_存在するエンティティをsaveしたときに更新されること(): void
@@ -76,13 +76,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'test.jpg'
                     ),
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
@@ -102,13 +102,13 @@ class PublishedArticleRepositoryTest extends TestCase
             thumbnail_path: 'test.jpg',
             images: new ArticleImageList(
                 [
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
                         image_path: 'updated.jpg'
                     ),
-                    new DomainArticleImage(
+                    new ArticleImage(
                         id: Uuid::uuid7(),
                         article_id: $article_id,
                         user_id: $user_id,
@@ -135,6 +135,6 @@ class PublishedArticleRepositoryTest extends TestCase
             'article_id' => $publishedArticle->getId(),
             'image_path' => 'updated.jpg'
         ]);
-        $this->assertCount(2, ArticleImage::query()->where('article_id', $publishedArticle->getId())->get());
+        $this->assertCount(2, ArticleImageEloquent::query()->where('article_id', $publishedArticle->getId())->get());
     }
 }

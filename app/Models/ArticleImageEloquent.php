@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleImage extends Model
+class ArticleImageEloquent extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $table = 'article_images';
 }
