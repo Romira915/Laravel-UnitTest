@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
-class ArticleFactory extends Factory
+class ArticleEloquentFactory extends Factory
 {
     /**
      * Define the model's default state.

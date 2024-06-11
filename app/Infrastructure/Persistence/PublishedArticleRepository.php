@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence;
 
 use App\Domain\Article\Entities\PublishedArticle;
-use App\Models\Article;
-use App\Models\ArticleDetail;
+use App\Models\ArticleDetailEloquent;
+use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
-use App\Models\ArticlePublished;
+use App\Models\ArticlePublishedEloquent;
 
 class PublishedArticleRepository
 {
     public static function save(PublishedArticle $article): void
     {
-        Article::query()->upsert([
+        ArticleEloquent::query()->upsert([
             'id' => $article->getId(),
             'user_id' => $article->getUserId(),
         ], ['id'], ['id', 'user_id']);
 
-        ArticlePublished::query()->upsert([
+        ArticlePublishedEloquent::query()->upsert([
             'article_id' => $article->getId(),
             'user_id' => $article->getUserId(),
         ], ['article_id'], ['article_id', 'user_id']);
 
-        ArticleDetail::query()->upsert([
+        ArticleDetailEloquent::query()->upsert([
             'article_id' => $article->getId(),
             'user_id' => $article->getUserId(),
             'title' => $article->getTitle(),

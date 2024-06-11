@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
-use App\Models\ArticleDetail;
-use App\Models\ArticlePublished;
+use App\Models\ArticleDetailEloquent;
+use App\Models\ArticleEloquent;
+use App\Models\ArticlePublishedEloquent;
 use Illuminate\Database\Seeder;
 
 class ArticlesSeeder extends Seeder
@@ -14,6 +14,6 @@ class ArticlesSeeder extends Seeder
      */
     public function run(): void
     {
-        Article::factory(50)->has(ArticlePublished::factory(1))->has(ArticleDetail::factory(1))->create();
+        ArticleEloquent::factory(50)->has(ArticlePublishedEloquent::factory(1))->has(ArticleDetailEloquent::factory(1))->create();
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\ArticleDetail;
+use App\Models\ArticlePublishedEloquent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<ArticleDetail>
+ * @extends Factory<ArticlePublishedEloquent>
  */
-class ArticleDetailFactory extends Factory
+class ArticlePublishedEloquentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +20,6 @@ class ArticleDetailFactory extends Factory
         return [
             'article_id' => $this->faker->uuid(),
             'user_id' => $this->faker->uuid(),
-            'title' => $this->faker->sentence(),
-            'body' => $this->faker->text(8000),
-            'thumbnail_path' => $this->faker->filePath(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
