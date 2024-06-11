@@ -46,4 +46,4 @@ jobs:
         run: make init-test
 
       - name: Run test suite
-        run: docker compose exec app composer run-script test
+        run: docker compose exec app-test composer run-script test
