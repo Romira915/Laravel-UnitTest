@@ -4,7 +4,6 @@ namespace Tests\Unit\Infrastructure\QueryServices;
 
 use App\Infrastructure\QueryServices\ArticleSummaryQueryService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PDOException;
 use Tests\TestCase;
 
 class ArticleSummaryQueryServiceTest extends TestCase
@@ -33,14 +32,13 @@ class ArticleSummaryQueryServiceTest extends TestCase
         $this->assertCount(0, $articles);
     }
 
-    public function test_limitが負の値の場合、例外が投げられること(): void
+    public function test_limitが負の値の場合、空の配列が返ってくること(): void
     {
         $this->seed();
 
-        $this->expectException(PDOException::class);
-        $this->expectExceptionMessage('Numeric value out of range');
-
         $queryService = new ArticleSummaryQueryService();
         $articles = $queryService->getArticleSummaryList(-1);
+
+        $this->assertCount(0, $articles);
     }
 }

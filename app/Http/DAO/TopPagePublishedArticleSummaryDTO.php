@@ -12,7 +12,7 @@ class TopPagePublishedArticleSummaryDTO
         public string $id,
         public string $title,
         public string $body,
-        string        $thumbnail_image_path,
+        string $thumbnail_image_path,
         public string $created_at,
     )
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\QueryServices;
 
 use App\Http\DAO\TopPagePublishedArticleSummaryDTO;
-use Illuminate\Support\Facades\DB;
+use App\Models\ArticleEloquent;
 
 class ArticleSummaryQueryService
 {
@@ -15,19 +15,22 @@ class ArticleSummaryQueryService
      */
     public function getArticleSummaryList(int $limit): array
     {
-        $rows = DB::select('
-            SELECT a.id,
-                   ad.title,
-                   ad.body,
-                   ad.thumbnail_path,
-                   ad.created_at,
-                   ad.updated_at
-            FROM articles as a
-                     INNER JOIN article_published AS ap ON a.id = ap.article_id
-                     INNER JOIN article_details AS ad ON a.id = ad.article_id
-            ORDER BY ad.created_at DESC
-            LIMIT ?
-        ', [$limit]);
+        if ($limit < 1) {
+            return [];
+        }
+
+        $rows = ArticleEloquent::query()
+            ->select([
+                'articles.id',
+                'article_details.title',
+                'article_details.body',
+                'article_details.thumbnail_path',
+                'article_details.created_at'
+            ])
+            ->join('article_published', 'articles.id', '=', 'article_published.article_id')
+            ->join('article_details', 'articles.id', '=', 'article_details.article_id')
+            ->limit($limit)
+            ->get();
 
         $result = [];
         foreach ($rows as $row) {
@@ -36,7 +39,7 @@ class ArticleSummaryQueryService
                 title: $row->title,
                 body: $row->body,
                 thumbnail_image_path: $row->thumbnail_path,
-                created_at: $row->created_at,
+                created_at: (string)$row->created_at,
             );
         }
 
