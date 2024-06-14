@@ -19,16 +19,7 @@ class ArticleSummaryQueryService
             return [];
         }
 
-        $rows = ArticleEloquent::query()
-            ->select([
-                'articles.id',
-                'article_details.title',
-                'article_details.body',
-                'article_details.thumbnail_path',
-                'article_details.created_at'
-            ])
-            ->join('article_published', 'articles.id', '=', 'article_published.article_id')
-            ->join('article_details', 'articles.id', '=', 'article_details.article_id')
+        $rows = ArticleEloquent::with('articlePublishedEloquent', 'articleDetailEloquent')
             ->limit($limit)
             ->get();
 
@@ -36,10 +27,10 @@ class ArticleSummaryQueryService
         foreach ($rows as $row) {
             $result[] = new TopPagePublishedArticleSummaryDTO(
                 id: $row->id,
-                title: $row->title,
-                body: $row->body,
-                thumbnail_image_path: $row->thumbnail_path,
-                created_at: (string)$row->created_at,
+                title: $row->articleDetailEloquent->title,
+                body: $row->articleDetailEloquent->body,
+                thumbnail_image_path: $row->articleDetailEloquent->thumbnail_path,
+                created_at: (string)$row->articleDetailEloquent->created_at,
             );
         }
 
