@@ -24,7 +24,7 @@ class GetIndexController extends Controller
      */
     public function index(GetIndexRequest $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $articles = $this->articleSummaryQueryService->getArticleSummaryList($request->limit ?? 20);
+        $articles = $this->articleSummaryQueryService->getArticleSummaryList($request->limit ?? self::DEFAULT_LIMIT);
 
         return view('index', [
             'currentUserDTO' => null /** TODO */,
