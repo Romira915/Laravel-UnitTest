@@ -22,4 +22,9 @@ class ArticleEloquent extends Model
     {
         return $this->hasOne(ArticleDetailEloquent::class, 'article_id');
     }
+
+    public function articleImageEloquent(): HasOne
+    {
+        return $this->hasOne(ArticleImageEloquent::class, 'article_id');
+    }
 }
