@@ -16,9 +16,10 @@
     <main class='flex flex-col gap-16 items-center'>
         <form id="articleForm" class="flex flex-col gap-4 items-center w-fit" action="/articles" method="post"
               enctype="multipart/form-data">
-            @if($errorMessage)
-                <p class='text-red-500'>{{$errorMessage}}</p>
-            @endif
+            @csrf
+            @foreach($errors->all() as $error)
+                <p class='text-red-500'>{{$error}}</p>
+            @endforeach
             <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
             <div class="flex flex-col items-start gap-2 justify-between w-full">
                 <label for="title">タイトル</label>
