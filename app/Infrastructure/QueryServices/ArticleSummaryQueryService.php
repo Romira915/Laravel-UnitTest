@@ -21,7 +21,8 @@ class ArticleSummaryQueryService
 
         $rows = ArticleEloquent::with('articlePublishedEloquent', 'articleDetailEloquent')
             ->limit($limit)
-            ->get();
+            ->get()
+            ->sortByDesc(fn($row) => $row->articlePublishedEloquent->created_at);
 
         $result = [];
         foreach ($rows as $row) {
