@@ -6,7 +6,7 @@ use App\Exception\ArticleNotFoundException;
 use App\Infrastructure\QueryServices\PublishedArticleDetailQueryService;
 use Illuminate\Http\Request;
 
-class GetArticleDetailController extends Controller
+class GetArticlesArticleIdController extends Controller
 {
     public function __construct(private PublishedArticleDetailQueryService $publishedArticleDetailQueryService)
     {
