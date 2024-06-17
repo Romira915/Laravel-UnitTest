@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\QueryServices;
 
 use App\Exception\ArticleNotFoundException;
-use App\Http\DAO\PublishedArticleDetailPageDTO;
+use App\Http\DTO\PublishedArticleDetailPageDTO;
 use App\Models\ArticleEloquent;
 
 class PublishedArticleDetailQueryService

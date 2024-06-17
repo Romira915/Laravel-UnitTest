@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\QueryServices;
 
-use App\Http\DAO\TopPagePublishedArticleSummaryDTO;
+use App\Http\DTO\TopPagePublishedArticleSummaryDTO;
 use App\Models\ArticleEloquent;
 
 class ArticleSummaryQueryService
