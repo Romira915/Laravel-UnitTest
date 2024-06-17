@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Exception\ArticleNotFoundException;
 use App\Infrastructure\QueryServices\PublishedArticleDetailQueryService;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,7 @@ class GetArticlesArticleIdController extends Controller
     {
         $article_dto = $this->publishedArticleDetailQueryService->getPublishedArticleDetail($request->article_id);
 
-        if ($article_dto instanceof ArticleNotFoundException) {
+        if ($article_dto === null) {
             abort(404);
         }
 

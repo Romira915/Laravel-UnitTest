@@ -35,7 +35,7 @@ class PublishedArticleDetailQueryServiceTest extends TestCase
         $this->assertSame($testArticle->articleDetailEloquent->title, $article_dto->title);
     }
 
-    public function test_存在しない記事IDを指定した場合ArticleNotFoundExceptionが返ること()
+    public function test_存在しない記事IDを指定した場合Nullが返ること()
     {
         $queryService = new PublishedArticleDetailQueryService();
 
@@ -43,6 +43,6 @@ class PublishedArticleDetailQueryServiceTest extends TestCase
 
         $article_dto = $queryService->getPublishedArticleDetail($article_id);
 
-        $this->assertSame(ArticleNotFoundException::class, $article_dto::class);
+        $this->assertNull($article_dto);
     }
 }

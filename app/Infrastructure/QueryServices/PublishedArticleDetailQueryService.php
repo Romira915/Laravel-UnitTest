@@ -10,14 +10,14 @@ use App\Models\ArticleEloquent;
 
 class PublishedArticleDetailQueryService
 {
-    public function getPublishedArticleDetail(string $article_id): PublishedArticleDetailPageDTO|ArticleNotFoundException
+    public function getPublishedArticleDetail(string $article_id): PublishedArticleDetailPageDTO|null
     {
         $article = ArticleEloquent::with('articleDetailEloquent', 'articlePublishedEloquent', 'articleImageEloquent')
             ->where('id', $article_id)
             ->first();
 
         if ($article === null) {
-            return new ArticleNotFoundException();
+            return null;
         }
 
         $image_path_list = [];
