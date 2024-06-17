@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Http\Requests\PostArticlesRequest;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
-use Ramsey\Uuid\Uuid;
+use App\Utils\Uuid;
 
 class PostArticlesController extends Controller
 {
@@ -19,9 +19,9 @@ class PostArticlesController extends Controller
     public function __invoke(PostArticlesRequest $request)
     {
         /** TODO: ログイン機能実装後に置き換える */
-        $user_id = (string)Uuid::uuid7();
+        $user_id = Uuid::generate();
 
-        $article = PublishedArticle::create(
+        $article = new PublishedArticle(
             user_id: $user_id,
             title: $request->title,
             body: $request->body,

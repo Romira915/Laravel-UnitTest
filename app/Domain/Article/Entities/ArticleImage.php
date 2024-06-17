@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Entities;
 
-use Ramsey\Uuid\Uuid;
+use App\Utils\Uuid;
 
 readonly class ArticleImage
 {
+    private string $id;
+
     public function __construct(
-        private string $id,
         private string $article_id,
         private string $user_id,
         private string $image_path,
+        ?string $id = null,
     )
     {
-    }
-
-    public static function create(string $article_id, string $user_id, string $image_path): ArticleImage
-    {
-        return new self(
-            id: (string)Uuid::uuid7(),
-            article_id: $article_id,
-            user_id: $user_id,
-            image_path: $image_path
-        );
+        $this->id = $id ?? Uuid::generate();
     }
 
     public function getId(): string

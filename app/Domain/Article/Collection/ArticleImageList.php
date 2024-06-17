@@ -33,7 +33,7 @@ class ArticleImageList
     {
         $imageList = [];
         foreach ($image_paths as $image_path) {
-            $imageList[] = ArticleImage::create($article_id, $user_id, $image_path);
+            $imageList[] = new ArticleImage($article_id, $user_id, $image_path);
         }
         return new self($imageList);
     }

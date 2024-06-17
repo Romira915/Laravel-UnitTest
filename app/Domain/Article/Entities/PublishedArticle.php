@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Entities;
 
-
 use App\Domain\Article\Collection\ArticleImageList;
-use App\Domain\Article\Collection\ArticleTagList;
-use Ramsey\Uuid\Uuid;
+use App\Utils\Uuid;
 
 class PublishedArticle
 {
+    private string $id;
+    private ArticleImageList $images;
+
     /**
      * @param string $id
      * @param string $user_id
@@ -20,35 +21,17 @@ class PublishedArticle
      * @param ArticleImageList $images
      */
     public function __construct(
-        private string           $id,
-        private string           $user_id,
-        private string           $title,
-        private string           $body,
-        private string           $thumbnail_path,
-        private ArticleImageList $images,
-    )
-    {
-    }
-
-    public static function create(
-        string $user_id,
-        string $title,
-        string $body,
-        string $thumbnail_path,
+        private string $user_id,
+        private string $title,
+        private string $body,
+        private string $thumbnail_path,
         /** @var string[] $image_paths */
         array $image_paths,
-    ): self
+        ?string $id = null,
+    )
     {
-        $article_id = (string)Uuid::uuid7();
-
-        return new self(
-            id: $article_id,
-            user_id: $user_id,
-            title: $title,
-            body: $body,
-            thumbnail_path: $thumbnail_path,
-            images: ArticleImageList::fromImagePathList($article_id, $user_id, $image_paths)
-        );
+        $this->id = $id ?? Uuid::generate();
+        $this->images = ArticleImageList::fromImagePathList($this->id, $user_id, $image_paths);
     }
 
     public function getId(): string
