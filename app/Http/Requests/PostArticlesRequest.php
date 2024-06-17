@@ -49,4 +49,14 @@ class PostArticlesRequest extends FormRequest
             'images.*.max' => '画像は4MB以内で入力してください',
         ];
     }
+
+    public function passedValidation()
+    {
+        $this->merge([
+            'thumbnail_path' => '/storage/' . $this->file('thumbnail')->storePublicly('images/thumbnails', 'public'),
+            'image_paths' => collect($this->file('images'))->map(function ($image) {
+                return '/storage/' . $image->storePublicly('images/articles', 'public');
+            })->toArray(),
+        ]);
+    }
 }
