@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\DAO;
+namespace App\Http\DTO;
 
 class TopPagePublishedArticleSummaryDTO
 {
