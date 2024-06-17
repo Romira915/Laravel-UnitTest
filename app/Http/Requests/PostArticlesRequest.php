@@ -25,6 +25,7 @@ class PostArticlesRequest extends FormRequest
             'title' => ['required', 'string', 'max:100'],
             'body' => ['required', 'string', 'max:8000'],
             'thumbnail' => ['required', 'file', 'image', 'mimes:jpeg,png,gif', 'max:4096'],
+            'images.*' => 'file|image|mimes:jpeg,png,gif|max:4096',
         ];
     }
 
@@ -42,6 +43,10 @@ class PostArticlesRequest extends FormRequest
             'thumbnail.image' => 'サムネイルは画像で入力してください',
             'thumbnail.mimes' => 'サムネイルはjpeg,png,gif形式で入力してください',
             'thumbnail.max' => 'サムネイルは4MB以内で入力してください',
+            'images.*.file' => '画像はファイルで入力してください',
+            'images.*.image' => '画像は画像で入力してください',
+            'images.*.mimes' => '画像はjpeg,png,gif形式で入力してください',
+            'images.*.max' => '画像は4MB以内で入力してください',
         ];
     }
 }
