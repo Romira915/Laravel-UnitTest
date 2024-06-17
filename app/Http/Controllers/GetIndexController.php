@@ -25,7 +25,7 @@ class GetIndexController extends Controller
         $articles = $this->articleSummaryQueryService->getArticleSummaryList($request->limit ? (int)$request->limit : self::DEFAULT_LIMIT);
 
         return view('index', [
-            'currentUserDTO' => null /** TODO */,
+            'current_user_dto' => null /** TODO */,
             'errorMessage' => "Error" /** TODO */,
             'articles' => $articles,
         ]);
