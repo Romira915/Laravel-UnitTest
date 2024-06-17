@@ -14,6 +14,7 @@ services:
       MYSQL_DATABASE: app
       IMAGE_BASE_URL: http://localhost:8080
     volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./php/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./:/var/www/app
     depends_on:

@@ -29,6 +29,15 @@ class ArticleImageList
         $this->images = $images;
     }
 
+    public static function fromImagePathList(string $article_id, string $user_id, array $image_paths): ArticleImageList
+    {
+        $imageList = [];
+        foreach ($image_paths as $image_path) {
+            $imageList[] = new ArticleImage($article_id, $user_id, $image_path);
+        }
+        return new self($imageList);
+    }
+
     /**
      * @return ArticleImage[]
      */

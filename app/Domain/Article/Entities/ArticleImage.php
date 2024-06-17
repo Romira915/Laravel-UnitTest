@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Entities;
 
+use App\Utils\Uuid;
+
 readonly class ArticleImage
 {
+    private string $id;
+
     public function __construct(
-        private string $id,
         private string $article_id,
         private string $user_id,
         private string $image_path,
+        ?string $id = null,
     )
     {
+        $this->id = $id ?? Uuid::generate();
     }
 
     public function getId(): string

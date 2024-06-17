@@ -29,6 +29,7 @@ class PublishedArticleRepository
             'user_id' => $article->getUserId(),
             'title' => $article->getTitle(),
             'body' => $article->getBody(),
+            'thumbnail_path' => $article->getThumbnailPath(),
         ], ['article_id'], ['article_id', 'user_id', 'title', 'body']);
 
         ArticleImageEloquent::query()->where('article_id', $article->getId())->delete();
