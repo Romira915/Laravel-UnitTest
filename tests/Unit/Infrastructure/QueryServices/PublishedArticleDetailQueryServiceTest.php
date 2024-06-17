@@ -1,5 +1,7 @@
 <?php /** @noinspection NonAsciiCharacters */
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Infrastructure\QueryServices;
 
 use App\Exception\ArticleNotFoundException;
