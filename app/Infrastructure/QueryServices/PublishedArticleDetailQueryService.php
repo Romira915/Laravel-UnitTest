@@ -4,33 +4,26 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\QueryServices;
 
+use App\Exception\ArticleNotFoundException;
 use App\Http\DAO\PublishedArticleDetailPageDTO;
+use App\Models\ArticleEloquent;
 
 class PublishedArticleDetailQueryService
 {
-    public function getPublishedArticleDetail(string $articleId): PublishedArticleDetailPageDTO
+    public function getPublishedArticleDetail(string $article_id): PublishedArticleDetailPageDTO|ArticleNotFoundException
     {
-        $article = ArticleEloquent::with('articleDetailEloquent', 'articlePublishedEloquent', 'articleTagEloquent', 'articleImageEloquent')
-            ->where('id', $articleId)
+        $article = ArticleEloquent::with('articleDetailEloquent', 'articlePublishedEloquent', 'articleImageEloquent')
+            ->where('id', $article_id)
             ->first();
 
         if ($article === null) {
-            throw new ArticleNotFoundException();
+            return new ArticleNotFoundException();
         }
 
-        $imageList = new ArticleImageList(
-            $article->articleImageEloquent->map(fn($image) => new ArticleImage(
-                id: $image->id,
-                url: config('image.base_url') . $image->path,
-            ))->toArray()
-        );
-
-        $tagList = new ArticleTagList(
-            $article->articleTagEloquent->map(fn($tag) => new ArticleTag(
-                id: $tag->id,
-                name: $tag->name,
-            ))->toArray()
-        );
+        $image_path_list = [];
+        foreach ($article->ArticleImageEloquent as $image) {
+            $image_path_list[] = config('image.base_url') . $image->image_path;
+        }
 
         return new PublishedArticleDetailPageDTO(
             article_id: $article->id,
@@ -38,8 +31,8 @@ class PublishedArticleDetailQueryService
             title: $article->articleDetailEloquent->title,
             body: $article->articleDetailEloquent->body,
             thumbnail_image_url: config('image.base_url') . $article->articleDetailEloquent->thumbnail_path,
-            image_url_list: $imageList->getImageUrlList(),
-            tags: $tagList->getTagList(),
+            image_url_list: $image_path_list,
+            tags: [] /* TODO: Implement tags */,
             created_at: (string)$article->articlePublishedEloquent->created_at,
             updated_at: (string)$article->articlePublishedEloquent->updated_at,
         );
