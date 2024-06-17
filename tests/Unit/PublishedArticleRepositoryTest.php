@@ -21,27 +21,12 @@ class PublishedArticleRepositoryTest extends TestCase
         $user_id = Uuid::uuid7();
 
         $publishedArticle = new PublishedArticle(
-            id: $article_id,
             user_id: $user_id,
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
-            images: new ArticleImageList(
-                [
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'test.jpg'
-                    ),
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'test2.jpg'
-                    )
-                ]
-            )
+            image_paths: ['test.jpg', 'test2.jpg'],
+            id: $article_id
         );
 
         PublishedArticleRepository::save($publishedArticle);
@@ -69,53 +54,23 @@ class PublishedArticleRepositoryTest extends TestCase
         $user_id = Uuid::uuid7();
 
         $publishedArticle = new PublishedArticle(
-            id: $article_id,
             user_id: $user_id,
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
-            images: new ArticleImageList(
-                [
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'test.jpg'
-                    ),
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'test2.jpg'
-                    )
-                ]
-            )
+            image_paths: ['test.jpg', 'test2.jpg'],
+            id: $article_id
         );
 
         PublishedArticleRepository::save($publishedArticle);
 
         $publishedArticle = new PublishedArticle(
-            id: $article_id,
             user_id: $user_id,
             title: 'Updated title',
             body: 'Updated body',
             thumbnail_path: 'test.jpg',
-            images: new ArticleImageList(
-                [
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'updated.jpg'
-                    ),
-                    new ArticleImage(
-                        id: Uuid::uuid7(),
-                        article_id: $article_id,
-                        user_id: $user_id,
-                        image_path: 'updated2.jpg'
-                    )
-                ]
-            )
+            image_paths: ['updated.jpg', 'updated2.jpg'],
+            id: $article_id,
         );
 
         PublishedArticleRepository::save($publishedArticle);
