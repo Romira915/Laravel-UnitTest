@@ -7,6 +7,7 @@ namespace App\Domain\Article\Entities;
 
 use App\Domain\Article\Collection\ArticleImageList;
 use App\Domain\Article\Collection\ArticleTagList;
+use Ramsey\Uuid\Uuid;
 
 class PublishedArticle
 {
@@ -27,6 +28,27 @@ class PublishedArticle
         private ArticleImageList $images,
     )
     {
+    }
+
+    public static function create(
+        string $user_id,
+        string $title,
+        string $body,
+        string $thumbnail_path,
+        /** @var string[] $image_paths */
+        array $image_paths,
+    ): self
+    {
+        $article_id = (string)Uuid::uuid7();
+
+        return new self(
+            id: $article_id,
+            user_id: $user_id,
+            title: $title,
+            body: $body,
+            thumbnail_path: $thumbnail_path,
+            images: ArticleImageList::fromImagePathList($article_id, $user_id, $image_paths)
+        );
     }
 
     public function getId(): string
