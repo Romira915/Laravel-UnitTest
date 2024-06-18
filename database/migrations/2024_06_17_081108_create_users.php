@@ -34,6 +34,17 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->string('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
@@ -44,5 +55,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('user_details');
         Schema::dropIfExists('user_hashed_password');
+        Schema::dropIfExists('sessions');
     }
 };
