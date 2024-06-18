@@ -4,12 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class UserHashedPasswordEloquent extends Model
 {
     use HasFactory, Notifiable;
+
+    protected $table = 'user_hashed_password';
 
     /**
      * The attributes that are mass assignable.
@@ -17,9 +20,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'hashed_password',
     ];
 
     /**
@@ -28,8 +29,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'hashed_password',
     ];
 
     /**
@@ -40,8 +40,12 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'hashed_password' => 'hashed',
         ];
+    }
+
+    public function userEloquent(): BelongsTo
+    {
+        return $this->belongsTo(UserEloquent::class, 'user_id');
     }
 }
