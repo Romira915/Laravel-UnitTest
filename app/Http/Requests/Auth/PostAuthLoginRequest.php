@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property-read string $display_name
@@ -29,5 +30,10 @@ class PostAuthLoginRequest extends FormRequest
             'display_name' => ['required'],
             'password' => ['required'],
         ];
+    }
+
+    public function login(): bool
+    {
+        return Auth::attempt(['display_name' => $this->display_name, 'password' => $this->password]);
     }
 }

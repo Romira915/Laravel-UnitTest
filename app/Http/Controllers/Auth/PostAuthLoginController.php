@@ -15,7 +15,7 @@ class PostAuthLoginController extends Controller
 {
     public function __invoke(PostAuthLoginRequest $request): RedirectResponse
     {
-        if (Auth::attempt($request->toArray())) {
+        if ($request->login()) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
