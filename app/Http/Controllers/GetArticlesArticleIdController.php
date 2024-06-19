@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Infrastructure\QueryServices\PublishedArticleDetailQueryService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class GetArticlesArticleIdController extends Controller
@@ -23,7 +26,9 @@ class GetArticlesArticleIdController extends Controller
 
         return view('article_detail', [
             'article' => $article_dto,
-            'current_user_dto' => null,
+            'current_user_id' => $request->current_user_id,
+            'current_user_display_name' => $request->current_user_display_name,
+            'current_user_icon_path' => $request->current_user_icon_path,
             'is_owner' => false,
         ]);
     }

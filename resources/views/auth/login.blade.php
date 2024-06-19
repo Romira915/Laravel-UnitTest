@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class='flex flex-col items-center w-[450px] m-auto'>
-    @include('common.header', ['current_user_dto' => null])
+    @include('common.header', ['current_user_id' => null, 'current_user_display_name' => null, 'current_user_icon_path' => null])
     <main class='w-full flex flex-col items-center'>
         <h2 class='text-2xl py-4'>Login</h2>
         <nav class='self-end'>

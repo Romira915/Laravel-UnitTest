@@ -10,6 +10,7 @@ class TopPagePublishedArticleSummaryDTO
 
     public function __construct(
         public string $id,
+        public string $user_id,
         public string $title,
         public string $body,
         string $thumbnail_image_path,
