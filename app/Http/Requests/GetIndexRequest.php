@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Trait\CurrentUserTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetIndexRequest extends FormRequest
 {
+    use CurrentUserTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -32,7 +35,7 @@ class GetIndexRequest extends FormRequest
     {
         if (isset($this->limit)) {
             $this->merge([
-                'limit' => (int)$this->limit
+                'limit' => (int)$this->limit,
             ]);
         }
     }

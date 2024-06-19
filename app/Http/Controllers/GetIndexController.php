@@ -10,7 +10,6 @@ use App\Infrastructure\QueryServices\CurrentUserQueryService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 
 class GetIndexController extends Controller
 {
@@ -25,16 +24,10 @@ class GetIndexController extends Controller
 
     public function __invoke(GetIndexRequest $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        if (Auth::check()) {
-            $current_user_dto = $this->currentUserServiceQuery->getCurrentUserById(Auth::id());
-        } else {
-            $current_user_dto = null;
-        }
-
         $articles = $this->articleSummaryQueryService->getArticleSummaryList($request->limit ?? self::DEFAULT_LIMIT);
 
         return view('index', [
-            'current_user_dto' => $current_user_dto,
+            'current_user_dto' => $request->getCurrentUserDto($this->currentUserServiceQuery),
             'articles' => $articles,
         ]);
     }
