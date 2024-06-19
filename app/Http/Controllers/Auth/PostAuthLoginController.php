@@ -17,8 +17,6 @@ class PostAuthLoginController extends Controller
     {
         if (Auth::attempt($request->toArray())) {
             $request->session()->regenerate();
-            Log::info($request->display_name . ' logged in');
-            Log::info('login to ' . UserEloquent::with('userDetailEloquent')->whereRelation('userDetailEloquent', 'display_name', $request->display_name)->first());
 
             return redirect()->intended('/');
         }
