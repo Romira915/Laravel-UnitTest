@@ -58,7 +58,7 @@
             <ul class="flex flex-col p-4 gap-4 w-[600px]">
                 @foreach($articles as $article)
                     <li class="flex flex-col gap-1 items-center w-full">
-                        @if($current_user_dto && $current_user_dto->id === $user_id)
+                        @if($current_user_dto && $current_user_dto->id === $article->user_id)
                             <form class="self-end w-fit" method="post" action="/articles/{{$article->id}}/delete"
                                   onSubmit="return CheckDelete()">
                                 <button type="submit" class="text-red-500 underline">Delete</button>

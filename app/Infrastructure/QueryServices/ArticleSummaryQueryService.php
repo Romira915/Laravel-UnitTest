@@ -28,6 +28,7 @@ class ArticleSummaryQueryService
         foreach ($rows as $row) {
             $result[] = new TopPagePublishedArticleSummaryDTO(
                 id: $row->id,
+                user_id: $row->user_id,
                 title: $row->articleDetailEloquent->title,
                 body: $row->articleDetailEloquent->body,
                 thumbnail_image_path: $row->articleDetailEloquent->thumbnail_path,
