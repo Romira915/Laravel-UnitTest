@@ -18,7 +18,7 @@
     }
 </script>
 <div class='root'>
-    @include('common.header', ['current_user_dto' => $current_user_dto])
+    @include('common.header', ['current_user_id' => $current_user_id, 'current_user_display_name' => $current_user_display_name, 'current_user_icon_path' => $current_user_icon_path])
 
     <div class='flex flex-col items-center w-[650px] m-auto'>
         @if($is_owner)
