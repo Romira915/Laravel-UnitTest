@@ -27,4 +27,13 @@ class GetIndexRequest extends FormRequest
             'limit' => ['integer', 'between:1, 100']
         ];
     }
+
+    public function passedValidation()
+    {
+        if (isset($this->limit)) {
+            $this->merge([
+                'limit' => (int)$this->limit
+            ]);
+        }
+    }
 }
