@@ -12,7 +12,10 @@ Route::middleware(CurrentUserMiddleware::class)->group(function () {
     Route::get('/', GetIndexController::class);
     Route::get('/articles/{article_id}', GetArticlesArticleIdController::class);
 });
-Route::post('/articles', PostArticlesController::class);
+
+Route::middleware('auth')->group(function () {
+    Route::post('/articles', PostArticlesController::class);
+});
 
 Route::prefix('auth')->group(function () {
     Route::get('/login', GetAuthLoginController::class)->name('show_login_page');
