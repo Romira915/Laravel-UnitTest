@@ -9,7 +9,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property-read int $limit
- * @property-read array<CurrentUserDTO> $current_user_dto
+ * @property-read string current_user_id
+ * @property-read string current_user_display_name
+ * @property-read string current_user_icon_path
  */
 class GetIndexRequest extends FormRequest
 {

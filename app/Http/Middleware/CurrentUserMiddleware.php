@@ -12,24 +12,27 @@ class CurrentUserMiddleware
 {
     public function __construct(
         private CurrentUserQueryService $currentUserQueryService
-    ) {
+    )
+    {
     }
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
             $current_user_dto = $this->currentUserQueryService->getCurrentUserById(Auth::id());
             $request->merge([
-                'current_user_dto' => [$current_user_dto]
+                'current_user_id' => $current_user_dto->id,
+                'current_user_display_name' => $current_user_dto->display_name,
+                'current_user_icon_path' => $current_user_dto->icon_path,
             ]);
         } else {
             $request->merge([
-                'current_user_dto' => [null]
+                'current_user_id' => null
             ]);
         }
 

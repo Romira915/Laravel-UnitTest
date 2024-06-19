@@ -27,7 +27,9 @@ class GetIndexController extends Controller
         $articles = $this->articleSummaryQueryService->getArticleSummaryList($request->limit ?? self::DEFAULT_LIMIT);
 
         return view('index', [
-            'current_user_dto' => $request->current_user_dto[0],
+            'current_user_id' => $request->current_user_id,
+            'current_user_display_name' => $request->current_user_display_name,
+            'current_user_icon_path' => $request->current_user_icon_path,
             'articles' => $articles,
         ]);
     }
