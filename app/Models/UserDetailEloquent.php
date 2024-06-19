@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property-read string $user_id
+ * @property-read string $display_name
+ * @property-read string $icon_path
+ */
 class UserDetailEloquent extends Model
 {
     use HasFactory, HasUuids;

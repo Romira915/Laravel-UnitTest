@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->uuid('user_id')->primary();
             $table->string('display_name', 191)->unique();
+            $table->text('icon_path');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

@@ -18,6 +18,8 @@ class UsersSeeder extends Seeder
 
         UserEloquent::factory(1)->has(UserHashedPasswordEloquent::factory(1)->state([
             'hashed_password' => '$2y$10$P/ds2511WmZRZlAf3.DZIu.EOubgcqxNpdO32ONQcO0R6fvlpvM0m',
-        ]))->has(UserDetailEloquent::factory(1))->create();
+        ]))->has(UserDetailEloquent::factory(1)->state([
+            'display_name' => 'test'
+        ]))->create();
     }
 }

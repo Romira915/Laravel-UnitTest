@@ -12,8 +12,6 @@ class ArticleSummaryQueryServiceTest extends TestCase
 
     public function test_limitが1以上の場合、DTOの配列が返ってくること(): void
     {
-        $this->seed();
-
         $queryService = new ArticleSummaryQueryService();
         $articles = $queryService->getArticleSummaryList(20);
 
@@ -23,8 +21,6 @@ class ArticleSummaryQueryServiceTest extends TestCase
 
     public function test_limitが0の場合、空の配列が返ってくること(): void
     {
-        $this->seed();
-
         $queryService = new ArticleSummaryQueryService();
         $articles = $queryService->getArticleSummaryList(0);
 
@@ -34,8 +30,6 @@ class ArticleSummaryQueryServiceTest extends TestCase
 
     public function test_limitが負の値の場合、空の配列が返ってくること(): void
     {
-        $this->seed();
-
         $queryService = new ArticleSummaryQueryService();
         $articles = $queryService->getArticleSummaryList(-1);
 
