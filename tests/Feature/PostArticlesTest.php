@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Models\UserDetailEloquent;
+use App\Models\UserEloquent;
+use App\Models\UserHashedPasswordEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -14,8 +17,18 @@ class PostArticlesTest extends TestCase
 {
     use RefreshDatabase;
 
+    private UserEloquent $loginUser;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->loginUser = UserEloquent::factory()->has(UserDetailEloquent::factory())->has(UserHashedPasswordEloquent::factory())->create();
+    }
+
     public function test_正常値のパラメータで記事作成が成功すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $thumbnail = UploadedFile::fake()->image('thumbnail.jpg');
@@ -40,6 +53,8 @@ class PostArticlesTest extends TestCase
 
     public function test_タイトルが空のパラメータで記事作成が失敗すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $thumbnail = UploadedFile::fake()->image('thumbnail.jpg');
@@ -60,6 +75,8 @@ class PostArticlesTest extends TestCase
 
     public function test_本文が空のパラメータで記事作成が失敗すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $thumbnail = UploadedFile::fake()->image('thumbnail.jpg');
@@ -80,6 +97,8 @@ class PostArticlesTest extends TestCase
 
     public function test_サムネイルが空のパラメータで記事作成が失敗すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $images = [
@@ -99,6 +118,8 @@ class PostArticlesTest extends TestCase
 
     public function test_サイズがオーバーのサムネイルで記事作成が失敗すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $thumbnail = UploadedFile::fake()->image('thumbnail.jpg')->size(5000);
@@ -119,6 +140,8 @@ class PostArticlesTest extends TestCase
 
     public function test_サイズがオーバーの画像で記事作成が失敗すること(): void
     {
+        $this->actingAs($this->loginUser, 'web');
+
         Storage::fake('public');
 
         $thumbnail = UploadedFile::fake()->image('thumbnail.jpg');
@@ -135,5 +158,26 @@ class PostArticlesTest extends TestCase
         ]);
 
         $postArticlesResponse->assertSessionHasErrors(['images.0']);
+    }
+
+    public function test_未ログインでリクエストするとログイン画面にリダイレクトされること(): void
+    {
+        Storage::fake('public');
+
+        $thumbnail = UploadedFile::fake()->image('thumbnail.jpg');
+        $images = [
+            UploadedFile::fake()->image('image1.jpg'),
+            UploadedFile::fake()->image('image2.jpg'),
+        ];
+
+        $postArticlesResponse = $this->post('/articles', [
+            'title' => 'test-title',
+            'body' => 'test-body',
+            'thumbnail' => $thumbnail,
+            'images' => $images,
+        ]);
+
+        $postArticlesResponse->assertStatus(302);
+        $postArticlesResponse->assertRedirect('/auth/login');
     }
 }
