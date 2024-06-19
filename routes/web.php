@@ -5,9 +5,10 @@ use App\Http\Controllers\Auth\PostAuthLoginController;
 use App\Http\Controllers\GetArticlesArticleIdController;
 use App\Http\Controllers\GetIndexController;
 use App\Http\Controllers\PostArticlesController;
+use App\Http\Middleware\CurrentUserMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', GetIndexController::class);
+Route::get('/', GetIndexController::class)->middleware(CurrentUserMiddleware::class);
 Route::post('/articles', PostArticlesController::class);
 Route::get('/articles/{article_id}', GetArticlesArticleIdController::class);
 

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Trait\CurrentUserTrait;
+use App\Http\DTO\CurrentUserDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property-read int $limit
+ * @property-read array<CurrentUserDTO> $current_user_dto
+ */
 class GetIndexRequest extends FormRequest
 {
-    use CurrentUserTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      */
