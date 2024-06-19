@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property-read string $id
+ * @property-read UserDetailEloquent $userDetailEloquent
+ * @property-read UserHashedPasswordEloquent $userHashedPasswordEloquent
+ */
 class UserEloquent extends Authenticatable
 {
     use HasFactory, HasUuids;
