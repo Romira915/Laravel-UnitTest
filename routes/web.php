@@ -17,7 +17,7 @@ Route::middleware(CurrentUserMiddleware::class)->group(function () {
     Route::get('/articles/{article_id}', GetArticlesArticleIdController::class);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', CurrentUserMiddleware::class])->group(function () {
     Route::post('/articles', PostArticlesController::class);
 });
 

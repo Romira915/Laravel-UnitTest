@@ -18,11 +18,8 @@ class PostArticlesController extends Controller
 
     public function __invoke(PostArticlesRequest $request)
     {
-        /** TODO: ログイン機能実装後に置き換える */
-        $user_id = Uuid::generate();
-
         $article = new PublishedArticle(
-            user_id: $user_id,
+            user_id: $request->current_user_id,
             title: $request->title,
             body: $request->body,
             thumbnail_path: $request->thumbnail_path,
