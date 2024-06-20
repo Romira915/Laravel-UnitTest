@@ -8,16 +8,15 @@ use App\Http\Controllers\Auth\PostAuthRegisterController;
 use App\Http\Controllers\GetArticlesArticleIdController;
 use App\Http\Controllers\GetIndexController;
 use App\Http\Controllers\PostArticlesController;
-use App\Http\Middleware\CurrentUserMiddleware;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(CurrentUserMiddleware::class)->group(function () {
+Route::middleware('current_user')->group(function () {
     Route::get('/', GetIndexController::class);
     Route::get('/articles/{article_id}', GetArticlesArticleIdController::class);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'current_user'])->group(function () {
     Route::post('/articles', PostArticlesController::class);
 });
 

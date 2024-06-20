@@ -44,4 +44,9 @@ class UserEloquent extends Authenticatable
     {
         return $this->hasOne(UserHashedPasswordEloquent::class, 'user_id');
     }
+
+    public function articlesEloquent()
+    {
+        return $this->hasMany(ArticleEloquent::class, 'user_id');
+    }
 }

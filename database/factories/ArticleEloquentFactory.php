@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Model;
+use App\Models\UserEloquent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class ArticleEloquentFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid(),
-            'user_id' => $this->faker->uuid(),
+            'user_id' => UserEloquent::query()->inRandomOrder()->first()->id,
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
