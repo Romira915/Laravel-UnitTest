@@ -44,4 +44,11 @@ class PublishedArticleRepository
         }
         ArticleImageEloquent::query()->upsert($upsertValues, ['id'], ['id', 'article_id', 'user_id', 'image_path']);
     }
+
+    public static function delete(string $article_id): void
+    {
+        ArticleImageEloquent::query()->where('article_id', $article_id)->delete();
+        ArticleDetailEloquent::query()->where('article_id', $article_id)->delete();
+        ArticlePublishedEloquent::query()->where('article_id', $article_id)->delete();
+    }
 }
