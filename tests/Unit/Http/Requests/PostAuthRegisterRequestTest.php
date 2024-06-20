@@ -16,7 +16,6 @@ class PostAuthRegisterRequestTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[Test]
     #[DataProvider('provideTestData')]
     public function test_バリデーションが正常に動作すること(array $input, bool $expect)
     {
