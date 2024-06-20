@@ -7,6 +7,11 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * @property-read string $display_name
+ * @property-read string $password
+ * @property-read string $icon_path
+ */
 class PostAuthRegisterRequest extends FormRequest
 {
     /**
@@ -25,8 +30,9 @@ class PostAuthRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'display_name' => ['required', 'string', 'max:100'],
+            'display_name' => ['required', 'string', 'max:100', 'regex:/\A[a-zA-Z0-9_-]+\z/u', 'unique:user_details,display_name'],
             'password' => ['required', 'string', 'confirmed', Password::min(8)->max(30)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
+            'user_icon' => ['required', 'file', 'image', 'mimes:jpeg,png,gif', 'max:4096'],
         ];
     }
 
@@ -46,6 +52,18 @@ class PostAuthRegisterRequest extends FormRequest
             'password.numbers' => 'パスワードは数字を含めてください',
             'password.symbols' => 'パスワードは記号を含めてください',
             'password.uncompromised' => 'パスワードが簡単すぎます',
+            'user_icon.required' => 'アイコンは必須です',
+            'user_icon.file' => 'アイコンはファイルで入力してください',
+            'user_icon.image' => 'アイコンは画像で入力してください',
+            'user_icon.mimes' => 'アイコンはjpeg,png,gif形式で入力してください',
+            'user_icon.max' => 'アイコンは4MB以内で入力してください',
         ];
+    }
+
+    public function passedValidation()
+    {
+        $this->merge([
+            'icon_path' => '/storage/' . $this->file('user_icon')->storePublicly('images/icons', 'public'),
+        ]);
     }
 }
