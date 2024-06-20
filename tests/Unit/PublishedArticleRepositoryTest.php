@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Article\Collection\ArticleImageList;
-use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
 use App\Models\ArticleImageEloquent;
+use App\Models\UserEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
@@ -15,13 +14,20 @@ class PublishedArticleRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user_id;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user_id = UserEloquent::query()->first()->id;
+    }
+
     public function test_存在しないエンティティをsaveしたときに新規に保存されること(): void
     {
         $article_id = Uuid::uuid7();
-        $user_id = Uuid::uuid7();
 
         $publishedArticle = new PublishedArticle(
-            user_id: $user_id,
+            user_id: $this->user_id,
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
@@ -54,7 +60,7 @@ class PublishedArticleRepositoryTest extends TestCase
         $user_id = Uuid::uuid7();
 
         $publishedArticle = new PublishedArticle(
-            user_id: $user_id,
+            user_id: $this->user_id,
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
@@ -65,7 +71,7 @@ class PublishedArticleRepositoryTest extends TestCase
         PublishedArticleRepository::save($publishedArticle);
 
         $publishedArticle = new PublishedArticle(
-            user_id: $user_id,
+            user_id: $this->user_id,
             title: 'Updated title',
             body: 'Updated body',
             thumbnail_path: 'test.jpg',
