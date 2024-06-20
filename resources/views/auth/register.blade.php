@@ -6,13 +6,13 @@
 </head>
 <body>
 <div class='flex flex-col items-center w-[450px] m-auto'>
-    @include('common.header', ['current_user_dto' => null])
+    @include('common.header', ['current_user_id' => null, 'current_user_display_name' => null, 'current_user_icon_path' => null])
     <main class='w-full flex flex-col items-center'>
         <h2 class='text-2xl py-4'>Register</h2>
         <nav class='self-end'>
             <a href='/auth/login' class='text-blue-500 underline'>Login</a>
         </nav>
-        <form action="/auth/register" method="post" class="w-full flex flex-col items-center gap-4">
+        <form action="/auth/register" method="post" enctype="multipart/form-data" class="w-full flex flex-col items-center gap-4">
             @csrf
             <div class="w-full">
                 <label for="display_name" class="w-full text-left">User name</label>
@@ -34,8 +34,7 @@
             </div>
             <div class="w-full">
                 <label for="user_icon" class="w-full text-left">User icon</label>
-                <input type="file" name="user_icon" id="user_icon" class="w-full p-2 border border-gray-300 rounded-md"
-                       accept="image/jpeg, image/png, image/gif">
+                <input type="file" name="user_icon" id="user_icon" class="w-full p-2 border border-gray-300 rounded-md" accept="image/jpeg, image/png, image/gif">
             </div>
             @foreach($errors->all() as $error)
                 <p class='text-red-500'>{{$error}}</p>

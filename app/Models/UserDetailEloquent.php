@@ -17,4 +17,5 @@ class UserDetailEloquent extends Model
 
     protected $table = 'user_details';
     protected $primaryKey = 'user_id';
+    protected $fillable = ['display_name', 'icon_path'];
 }
