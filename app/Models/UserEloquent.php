@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -45,7 +46,7 @@ class UserEloquent extends Authenticatable
         return $this->hasOne(UserHashedPasswordEloquent::class, 'user_id');
     }
 
-    public function articlesEloquent()
+    public function articlesEloquent(): HasMany
     {
         return $this->hasMany(ArticleEloquent::class, 'user_id');
     }

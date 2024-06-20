@@ -16,6 +16,18 @@ return new class extends Migration
         Schema::table('articles', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
+        Schema::table('article_published', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+        Schema::table('article_details', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+        Schema::table('article_images', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+        Schema::table('article_tags', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
