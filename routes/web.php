@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Articles\PostArticles\PostArticleIdDeleteController;
 use App\Http\Controllers\Auth\GetAuthLoginController;
 use App\Http\Controllers\Auth\GetAuthRegisterController;
 use App\Http\Controllers\Auth\PostAuthLoginController;
@@ -18,6 +19,7 @@ Route::middleware('current_user')->group(function () {
 
 Route::middleware(['auth', 'current_user'])->group(function () {
     Route::post('/articles', PostArticlesController::class);
+    Route::post('/articles/{article_id}/delete', PostArticleIdDeleteController::class);
 });
 
 Route::prefix('auth')->group(function () {
