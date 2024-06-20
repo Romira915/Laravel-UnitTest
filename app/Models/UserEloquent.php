@@ -18,6 +18,8 @@ class UserEloquent extends Authenticatable
 
     protected $table = 'users';
 
+    protected $fillable = ['id'];
+
     public function getAuthIdentifierName(): string
     {
         return 'id';

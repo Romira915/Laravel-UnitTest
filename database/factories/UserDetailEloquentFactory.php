@@ -18,7 +18,7 @@ class UserDetailEloquentFactory extends Factory
     {
         return [
             'user_id' => $this->faker->uuid(),
-            'display_name' => $this->faker->name(),
+            'display_name' => $this->faker->userName(),
             'icon_path' => $this->faker->filePath(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
