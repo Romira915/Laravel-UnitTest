@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace App\Infrastructure\QueryServices;
 
 use App\Http\DTO\PublishedArticleEditPageDTO;
-use App\Models\ArticleEloquent;
+use App\Models\ArticlePublishedEloquent;
 
 class PublishedArticleEditQueryService
 {
     public function getPublishedArticleEditDTO(string $articleId): PublishedArticleEditPageDTO
     {
-        $article = ArticleEloquent::with(['articlePublishedEloquent', 'articleDetailEloquent'])
-            ->where('id', $articleId)
-            ->get()
-            ->filter(fn($row) => $row->articlePublishedEloquent !== null && $row->articleDetailEloquent !== null)
+        $article = ArticlePublishedEloquent::with(['articleDetailEloquent'])
+            ->where('article_id', $articleId)
             ->first();
 
         if ($article === null) {
