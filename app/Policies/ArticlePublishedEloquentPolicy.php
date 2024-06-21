@@ -35,7 +35,7 @@ class ArticlePublishedEloquentPolicy
      */
     public function update(UserEloquent $userEloquent, ArticlePublishedEloquent $articlePublishedEloquent): bool
     {
-        //
+        return $userEloquent->id === $articlePublishedEloquent->user_id;
     }
 
     /**
