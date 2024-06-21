@@ -4,7 +4,10 @@ namespace Tests\Unit;
 
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
+use App\Models\ArticleDetailEloquent;
+use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
+use App\Models\ArticlePublishedEloquent;
 use App\Models\UserEloquent;
 use App\Utils\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -111,9 +114,22 @@ class PublishedArticleRepositoryTest extends TestCase
             id: $article_id
         );
 
-        PublishedArticleRepository::save($publishedArticle);
+        $testArticle = ArticleEloquent::factory()
+            ->state(['user_id' => $this->user_id])
+            ->has(ArticlePublishedEloquent::factory()->state(['user_id' => $this->user_id]))
+            ->has(ArticleDetailEloquent::factory()->state([
+                'user_id' => $this->user_id,
+                'title' => 'Test title',
+                'body' => 'Test body',
+                'thumbnail_path' => 'test.jpg',
+            ]))
+            ->has(ArticleImageEloquent::factory(1)->state([
+                'user_id' => $this->user_id,
+                'image_path' => 'test.jpg',
+            ]))
+            ->create();
 
-        PublishedArticleRepository::delete($article_id);
+        PublishedArticleRepository::delete($testArticle->id);
 
         $this->assertDatabaseMissing('article_published', [
             'article_id' => $publishedArticle->getId(),
