@@ -59,11 +59,14 @@
                 @foreach($articles as $article)
                     <li class="flex flex-col gap-1 items-center w-full">
                         @if($current_user_id && $current_user_id === $article->user_id)
-                            <form class="self-end w-fit" method="post" action="/articles/{{$article->id}}/delete"
-                                  onSubmit="return CheckDelete()">
-                                @csrf
-                                <button type="submit" class="text-red-500 underline">Delete</button>
-                            </form>
+                            <div class="flex gap-1 items-center self-end">
+                                <a href="/articles/{{$article->id}}/edit" class="text-blue-500 underline">Edit</a>
+                                <form class="w-fit" method="post" action="/articles/{{$article->id}}/delete"
+                                      onSubmit="return CheckDelete()">
+                                    @csrf
+                                    <button type="submit" class="text-red-500 underline">Delete</button>
+                                </form>
+                            </div>
                         @endif
                         <a class="w-full" href="/articles/{{$article->id}}">
                             <article class="bg-cyan-200 flex flex-col items-start px-4 py-2">
