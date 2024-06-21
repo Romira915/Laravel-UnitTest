@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property-read string $id
+ * @property-read string $user_id
+ * @property-read ArticlePublishedEloquent $articlePublishedEloquent
+ * @property-read ArticleDetailEloquent $articleDetailEloquent
+ */
 class ArticleEloquent extends Model
 {
     use HasFactory, HasUuids;

@@ -61,6 +61,7 @@
                         @if($current_user_id && $current_user_id === $article->user_id)
                             <form class="self-end w-fit" method="post" action="/articles/{{$article->id}}/delete"
                                   onSubmit="return CheckDelete()">
+                                @csrf
                                 <button type="submit" class="text-red-500 underline">Delete</button>
                             </form>
                         @endif

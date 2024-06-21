@@ -8,16 +8,20 @@ use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
 use App\Models\ArticlePublishedEloquent;
+use App\Models\UserEloquent;
 use Tests\TestCase;
 
 class GetArticlesArticleIdTest extends TestCase
 {
     public function test_記事詳細ページを表示できること()
     {
+        $user_id = UserEloquent::query()->inRandomOrder()->first()->id;
+
         $testArticle = ArticleEloquent::factory()
-            ->has(ArticlePublishedEloquent::factory())
-            ->has(ArticleDetailEloquent::factory())
-            ->has(ArticleImageEloquent::factory(5))
+            ->state(['user_id' => $user_id])
+            ->has(ArticlePublishedEloquent::factory()->state(['user_id' => $user_id]))
+            ->has(ArticleDetailEloquent::factory()->state(['user_id' => $user_id]))
+            ->has(ArticleImageEloquent::factory(5)->state(['user_id' => $user_id]))
             ->create();
 
         $response = $this->get('/articles/' . $testArticle->id);

@@ -24,7 +24,7 @@ class PostAuthRegisterController extends Controller
             ]);
             $user->userDetailEloquent()->create([
                 'display_name' => $request->display_name,
-                'icon_path' => $request->file('user_icon')->store('public/user_icons'),
+                'icon_path' => $request->icon_path,
             ]);
             $user->userHashedPasswordEloquent()->create([
                 'hashed_password' => bcrypt($request->password),
