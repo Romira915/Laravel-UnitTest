@@ -266,5 +266,8 @@ class PublishedArticleRepositoryTest extends TestCase
         $this->assertDatabaseMissing('article_images', [
             'article_id' => $article_id,
         ]);
+        $this->assertDatabaseMissing('article_tags', [
+            'article_id' => $article_id,
+        ]);
     }
 }
