@@ -43,6 +43,7 @@ class PostArticlesTest extends TestCase
             'body' => 'test-body',
             'thumbnail' => $thumbnail,
             'images' => $images,
+            'tags' => 'test-tag1,test-tag2',
         ]);
 
         $postArticlesResponse->assertStatus(302);
