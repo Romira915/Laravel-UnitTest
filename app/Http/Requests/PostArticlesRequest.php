@@ -4,6 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property-read string $current_user_id
+ * @property-read string $title
+ * @property-read string $body
+ * @property-read string $thumbnail_path
+ * @property-read array<string> $image_paths
+ */
 class PostArticlesRequest extends FormRequest
 {
     /**
