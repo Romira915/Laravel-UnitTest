@@ -75,14 +75,14 @@
                                 <img class="self-center" src="{{$article->thumbnail_url}}"
                                      alt="{{$article->thumbnail_url}}" width="300" height="255">
                                 <ul class="flex gap-2">
-                                    @foreach($article->tags ?? [] as $tag)
+                                    @foreach($article->tags as $tag)
                                         <li class="text-sm">#{{$tag}}</li>
                                     @endforeach
                                 </ul>
                                 <div class="flex items-center gap-2">
-                                    <img class="user__icon" src="{{$article->user_icon_path ?? '#'}}"
-                                         alt="{{$article->user_icon_path ?? '#'}}" width="50" height="50">
-                                    <p class="text-sm">{{$article->user_display_name ?? 'Not Impl'}}</p>
+                                    <img class="user__icon" src="{{$article->user_icon_path}}"
+                                         alt="{{$article->user_icon_path}}" width="50" height="50">
+                                    <p class="text-sm">{{$article->user_display_name}}</p>
                                     <p class="text-sm">{{$article->created_at}}</p>
                                 </div>
                             </article>

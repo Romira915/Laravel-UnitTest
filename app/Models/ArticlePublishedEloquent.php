@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -23,6 +24,16 @@ class ArticlePublishedEloquent extends Model
 
     protected $table = 'article_published';
     protected $primaryKey = 'article_id';
+
+    public function userEloquent(): BelongsTo
+    {
+        return $this->belongsTo(UserEloquent::class, 'user_id');
+    }
+
+    public function userDetailEloquent(): BelongsTo
+    {
+        return $this->belongsTo(UserDetailEloquent::class, 'user_id', 'user_id');
+    }
 
     public function articleDetailEloquent(): HasOne
     {

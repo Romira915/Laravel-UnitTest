@@ -12,7 +12,7 @@ class PublishedArticleDetailQueryService
 {
     public function getPublishedArticleDetail(string $article_id): PublishedArticleDetailPageDTO|null
     {
-        $article = ArticleEloquent::with('articleDetailEloquent', 'articlePublishedEloquent', 'articleImageEloquent')
+        $article = ArticleEloquent::with('articleDetailEloquent', 'articlePublishedEloquent', 'articleImageEloquent', 'articleTagsEloquent')
             ->where('id', $article_id)
             ->first();
 
@@ -32,7 +32,7 @@ class PublishedArticleDetailQueryService
             body: $article->articleDetailEloquent->body,
             thumbnail_image_url: config('image.base_url') . $article->articleDetailEloquent->thumbnail_path,
             image_url_list: $image_path_list,
-            tags: [] /* TODO: Implement tags */,
+            tags: $article->articleTagsEloquent->map(fn($tag) => $tag->tag_name)->toArray(),
             created_at: (string)$article->articlePublishedEloquent->created_at,
             updated_at: (string)$article->articlePublishedEloquent->updated_at,
         );
