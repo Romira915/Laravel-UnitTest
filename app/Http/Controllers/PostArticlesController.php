@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Http\Requests\PostArticlesRequest;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
-use App\Utils\Uuid;
 
 class PostArticlesController extends Controller
 {
@@ -23,7 +24,13 @@ class PostArticlesController extends Controller
             title: $request->title,
             body: $request->body,
             thumbnail_path: $request->thumbnail_path,
-            image_paths: $request->image_paths
+            images: new ArticleImageList(array_map(
+                fn($image_path) => new ArticleImage(
+                    image_path: $image_path,
+                    user_id: $request->current_user_id,
+                ),
+                $request->image_paths
+            ))
         );
 
         $this->publishedArticleRepository->save($article);

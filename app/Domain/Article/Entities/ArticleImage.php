@@ -11,9 +11,9 @@ readonly class ArticleImage
     private string $id;
 
     public function __construct(
-        private string $article_id,
-        private string $user_id,
         private string $image_path,
+        private string $user_id,
+        private ?string $article_id = null,
         ?string $id = null,
     )
     {
@@ -25,7 +25,7 @@ readonly class ArticleImage
         return $this->id;
     }
 
-    public function getArticleId(): string
+    public function getArticleId(): ?string
     {
         return $this->article_id;
     }

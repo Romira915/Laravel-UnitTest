@@ -10,28 +10,35 @@ use App\Utils\Uuid;
 class PublishedArticle
 {
     private string $id;
-    private ArticleImageList $images;
 
     /**
-     * @param string $id
      * @param string $user_id
      * @param string $title
      * @param string $body
      * @param string $thumbnail_path
      * @param ArticleImageList $images
+     * @param string|null $id
      */
     public function __construct(
         private string $user_id,
         private string $title,
         private string $body,
         private string $thumbnail_path,
-        /** @var string[] $image_paths */
-        array $image_paths,
+        private ArticleImageList $images,
         ?string $id = null,
     )
     {
         $this->id = $id ?? Uuid::generate();
-        $this->images = ArticleImageList::fromImagePathList($this->id, $user_id, $image_paths);
+        $tmp_images = [];
+        foreach ($images->all() as $image) {
+            $tmp_images[] = new ArticleImage(
+                image_path: $image->getImagePath(),
+                user_id: $this->user_id,
+                article_id: $this->id,
+                id: $image->getId(),
+            );
+        }
+        $this->images = new ArticleImageList($tmp_images);
     }
 
     public function getId(): string
@@ -44,9 +51,19 @@ class PublishedArticle
         return $this->user_id;
     }
 
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function setBody(string $body): void
+    {
+        $this->body = $body;
     }
 
     public function getBody(): string
