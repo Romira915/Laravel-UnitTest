@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence;
 
 use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Collection\ArticleTagList;
 use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
+use App\Domain\Article\ValueObject\ArticleTag;
 use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
 use App\Models\ArticlePublishedEloquent;
+use App\Models\ArticleTagsEloquent;
 
 class PublishedArticleRepository
 {
@@ -35,6 +38,14 @@ class PublishedArticleRepository
                     id: $image->id
                 ),
                 $article->articleImageEloquent->all()
+            )),
+            tags: new ArticleTagList(array_map(
+                fn($tag) => new ArticleTag(
+                    user_id: $article->user_id,
+                    tag_name: $tag->tag_name,
+                    id: $tag->id
+                ),
+                $article->articleTagsEloquent->all()
             )),
             id: $article->article_id
         );
@@ -71,10 +82,23 @@ class PublishedArticleRepository
             ];
         }
         ArticleImageEloquent::query()->upsert($upsertValues, ['id'], ['id', 'article_id', 'user_id', 'image_path']);
+
+        ArticleTagsEloquent::query()->where('article_id', $article->getId())->delete();
+        $insertValues = [];
+        foreach ($article->getTags()->all() as $tag) {
+            $insertValues[] = [
+                'id' => $tag->id,
+                'article_id' => $article->getId(),
+                'user_id' => $article->getUserId(),
+                'tag_name' => $tag->tag_name,
+            ];
+        }
+        ArticleTagsEloquent::query()->insert($insertValues);
     }
 
     public static function delete(string $article_id): void
     {
+        ArticleTagsEloquent::query()->where('article_id', $article_id)->delete();
         ArticleImageEloquent::query()->where('article_id', $article_id)->delete();
         ArticleDetailEloquent::query()->where('article_id', $article_id)->delete();
         ArticlePublishedEloquent::query()->where('article_id', $article_id)->delete();

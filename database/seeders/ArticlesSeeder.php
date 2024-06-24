@@ -6,6 +6,7 @@ use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
 use App\Models\ArticlePublishedEloquent;
+use App\Models\ArticleTagsEloquent;
 use App\Models\UserEloquent;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +24,7 @@ class ArticlesSeeder extends Seeder
                 ->has(ArticlePublishedEloquent::factory(1)->state(['user_id' => $random_choice_user_id]))
                 ->has(ArticleDetailEloquent::factory(1)->state(['user_id' => $random_choice_user_id]))
                 ->has(ArticleImageEloquent::factory(5)->state(['user_id' => $random_choice_user_id]))
+                ->has(ArticleTagsEloquent::factory(5)->state(['user_id' => $random_choice_user_id]))
                 ->create();
         }
 
@@ -35,6 +37,7 @@ class ArticlesSeeder extends Seeder
             ->has(ArticlePublishedEloquent::factory(1)->state(['user_id' => $test_user_id]))
             ->has(ArticleDetailEloquent::factory(1)->state(['user_id' => $test_user_id]))
             ->has(ArticleImageEloquent::factory(5)->state(['user_id' => $test_user_id]))
+            ->has(ArticleTagsEloquent::factory(5)->state(['user_id' => $random_choice_user_id]))
             ->create();
     }
 }
