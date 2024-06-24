@@ -17,6 +17,7 @@
         <form class="flex flex-col gap-4 items-center w-fit"
               action="/articles/{{$article_edit_dto->article_id}}/edit"
               method="post" enctype="multipart/form-data">
+            @csrf
             <div class="flex flex-col items-start gap-2 justify-between w-full">
                 <label for="title">タイトル</label>
                 <input class="w-[400px] p-1 border-2 border-gray-300" type="text" id="title" name="title" maxlength="100"

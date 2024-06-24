@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property-read string $article_id
+ * @property-read string $user_id
+ * @property-read string $image_path
  * @property-read ArticleDetailEloquent $articleDetailEloquent
+ * @property-read Collection<ArticleImageEloquent> $articleImageEloquent
  */
 class ArticlePublishedEloquent extends Model
 {
@@ -21,5 +26,10 @@ class ArticlePublishedEloquent extends Model
     public function articleDetailEloquent(): HasOne
     {
         return $this->hasOne(ArticleDetailEloquent::class, 'article_id', 'article_id');
+    }
+
+    public function articleImageEloquent(): HasMany
+    {
+        return $this->hasMany(ArticleImageEloquent::class, 'article_id', 'article_id');
     }
 }
