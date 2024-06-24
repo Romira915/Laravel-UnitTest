@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use App\Infrastructure\QueryServices\PublishedArticleEditQueryService;
+use App\Models\ArticlePublishedEloquent;
 use Illuminate\Http\Request;
 
 class GetArticleEditController extends Controller
@@ -16,7 +17,7 @@ class GetArticleEditController extends Controller
     {
         $current_user = $request->user();
 
-        if ($current_user === null || $current_user->cannot('update', $article_id)) {
+        if ($current_user->cannot('update', ArticlePublishedEloquent::query()->find($article_id))) {
             abort(403);
         }
 
