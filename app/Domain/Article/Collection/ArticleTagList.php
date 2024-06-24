@@ -26,7 +26,7 @@ class ArticleTagList
         }
 
         // duplicate check
-        $tagNames = array_map(fn($tag) => $tag->getTag(), $tags);
+        $tagNames = array_map(fn($tag) => $tag->tag_name, $tags);
         if (count($tagNames) !== count(array_unique($tagNames))) {
             throw new \InvalidArgumentException('Duplicate tags are not allowed');
         }

@@ -87,10 +87,10 @@ class PublishedArticleRepository
         $insertValues = [];
         foreach ($article->getTags()->all() as $tag) {
             $insertValues[] = [
-                'id' => $tag->getId(),
+                'id' => $tag->id,
                 'article_id' => $article->getId(),
                 'user_id' => $article->getUserId(),
-                'tag_name' => $tag->getTag(),
+                'tag_name' => $tag->tag_name,
             ];
         }
         ArticleTagsEloquent::query()->insert($insertValues);
