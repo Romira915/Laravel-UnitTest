@@ -21,11 +21,16 @@ class GetArticleEditController extends Controller
             abort(403);
         }
 
+        $article_edit_dto = $this->publishedArticleEditQueryService->getPublishedArticleEditDTO($article_id);
+        if ($article_edit_dto === null) {
+            abort(404);
+        }
+
         return view('article_edit', [
             'current_user_id' => $current_user->id,
             'current_user_display_name' => $current_user->userDetailEloquent->display_name,
             'current_user_icon_path' => $current_user->userDetailEloquent->icon_path,
-            'article_edit_dto' => $this->publishedArticleEditQueryService->getPublishedArticleEditDTO($article_id),
+            'article_edit_dto' => $article_edit_dto,
         ]);
     }
 }

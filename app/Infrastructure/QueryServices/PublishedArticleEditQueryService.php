@@ -9,18 +9,18 @@ use App\Models\ArticlePublishedEloquent;
 
 class PublishedArticleEditQueryService
 {
-    public function getPublishedArticleEditDTO(string $articleId): PublishedArticleEditPageDTO
+    public function getPublishedArticleEditDTO(string $articleId): ?PublishedArticleEditPageDTO
     {
         $article = ArticlePublishedEloquent::with(['articleDetailEloquent'])
             ->where('article_id', $articleId)
             ->first();
 
         if ($article === null) {
-            throw new \RuntimeException('Article not found');
+            return null;
         }
 
         return new PublishedArticleEditPageDTO(
-            article_id: $article->id,
+            article_id: $article->article_id,
             user_id: $article->user_id,
             title: $article->articleDetailEloquent->title,
             body: $article->articleDetailEloquent->body,
