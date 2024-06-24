@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
 use App\Models\ArticleDetailEloquent;
@@ -34,7 +36,16 @@ class PublishedArticleRepositoryTest extends TestCase
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
-            image_paths: ['test.jpg', 'test2.jpg'],
+            images: new ArticleImageList([
+                new ArticleImage(
+                    image_path: 'test.jpg',
+                    user_id: $this->user_id,
+                ),
+                new ArticleImage(
+                    image_path: 'test2.jpg',
+                    user_id: $this->user_id,
+                ),
+            ]),
             id: $article_id
         );
 
@@ -66,7 +77,16 @@ class PublishedArticleRepositoryTest extends TestCase
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
-            image_paths: ['test.jpg', 'test2.jpg'],
+            images: new ArticleImageList([
+                new ArticleImage(
+                    image_path: 'test.jpg',
+                    user_id: $this->user_id,
+                ),
+                new ArticleImage(
+                    image_path: 'test2.jpg',
+                    user_id: $this->user_id,
+                ),
+            ]),
             id: $article_id
         );
 
@@ -77,7 +97,16 @@ class PublishedArticleRepositoryTest extends TestCase
             title: 'Updated title',
             body: 'Updated body',
             thumbnail_path: 'test.jpg',
-            image_paths: ['updated.jpg', 'updated2.jpg'],
+            images: new ArticleImageList([
+                new ArticleImage(
+                    image_path: 'updated.jpg',
+                    user_id: $this->user_id,
+                ),
+                new ArticleImage(
+                    image_path: 'updated2.jpg',
+                    user_id: $this->user_id,
+                ),
+            ]),
             id: $article_id,
         );
 
@@ -110,7 +139,16 @@ class PublishedArticleRepositoryTest extends TestCase
             title: 'Test title',
             body: 'Test body',
             thumbnail_path: 'test.jpg',
-            image_paths: ['test.jpg', 'test2.jpg'],
+            images: new ArticleImageList([
+                new ArticleImage(
+                    image_path: 'test.jpg',
+                    user_id: $this->user_id,
+                ),
+                new ArticleImage(
+                    image_path: 'test2.jpg',
+                    user_id: $this->user_id,
+                ),
+            ]),
             id: $article_id
         );
 
