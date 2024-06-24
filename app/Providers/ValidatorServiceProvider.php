@@ -21,14 +21,8 @@ class ValidatorServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Validator::extend('article_tags', function ($attribute, $value, $parameters, $validator) {
-            foreach ($value as $tag) {
-                if (!TagValidator::validate($tag)) {
-                    return false;
-                }
-            }
-
-            return true;
+        Validator::extend('tag_max_length', function ($attribute, $value, $parameters, $validator) {
+            return TagValidator::validate($value);
         });
     }
 }

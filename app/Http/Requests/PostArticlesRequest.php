@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Domain\Article\Collection\ArticleTagList;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property-read string $body
  * @property-read string $thumbnail_path
  * @property-read array<string> $image_paths
+ * @property-read array<string> $tags
  */
 class PostArticlesRequest extends FormRequest
 {
@@ -33,6 +35,8 @@ class PostArticlesRequest extends FormRequest
             'body' => ['required', 'string', 'max:8000'],
             'thumbnail' => ['required', 'file', 'image', 'mimes:jpeg,png,gif', 'max:4096'],
             'images.*' => 'file|image|mimes:jpeg,png,gif|max:4096',
+            'tags' => ['required', 'array', 'max:' . ArticleTagList::MAX_TAGS],
+            'tags.*' => ['string', 'tag_max_length', 'distinct'],
         ];
     }
 
@@ -54,7 +58,22 @@ class PostArticlesRequest extends FormRequest
             'images.*.image' => '画像は画像で入力してください',
             'images.*.mimes' => '画像はjpeg,png,gif形式で入力してください',
             'images.*.max' => '画像は4MB以内で入力してください',
+            'tags.required' => 'タグは必須です',
+            'tags.array' => 'タグは配列で入力してください',
+            'tags.max' => 'タグは10個以内で入力してください',
+            'tags.*.distinct' => 'タグは重複してはいけません',
+            'tags.*.string' => 'タグは文字列で入力してください',
+            'tags.*.tag_max_length' => 'タグは20文字以内で入力してください',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $tags = explode(',', $this->input('tags'));
+
+        $this->merge([
+            'tags' => $tags,
+        ]);
     }
 
     public function passedValidation()
