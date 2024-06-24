@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Articles\GetArticleEditController;
+use App\Http\Controllers\Articles\PostArticleEditController;
 use App\Http\Controllers\Articles\PostArticles\PostArticleIdDeleteController;
 use App\Http\Controllers\Auth\GetAuthLoginController;
 use App\Http\Controllers\Auth\GetAuthRegisterController;
@@ -16,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('current_user')->group(function () {
     Route::get('/', GetIndexController::class);
     Route::get('/articles/{article_id}', GetArticlesArticleIdController::class);
-    Route::get('/articles/{article_id}/edit', GetArticleEditController::class);
 });
 
 Route::middleware(['auth', 'current_user'])->group(function () {
     Route::post('/articles', PostArticlesController::class);
     Route::post('/articles/{article_id}/delete', PostArticleIdDeleteController::class);
+    Route::get('/articles/{article_id}/edit', GetArticleEditController::class);
+    Route::post('/articles/{article_id}/edit', PostArticleEditController::class);
 });
 
 Route::prefix('auth')->group(function () {
