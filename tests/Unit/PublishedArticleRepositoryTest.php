@@ -27,6 +27,37 @@ class PublishedArticleRepositoryTest extends TestCase
         $this->user_id = UserEloquent::query()->first()->id;
     }
 
+    public function test_存在するエンティティをfindByIdしたときにエンティティが返ること(): void
+    {
+        $article = ArticleEloquent::factory()
+            ->state(['user_id' => $this->user_id])
+            ->has(ArticlePublishedEloquent::factory()->state(['user_id' => $this->user_id]))
+            ->has(ArticleDetailEloquent::factory()->state([
+                'user_id' => $this->user_id,
+                'title' => 'Test title',
+                'body' => 'Test body',
+                'thumbnail_path' => 'test.jpg',
+            ]))
+            ->has(ArticleImageEloquent::factory(1)->state([
+                'user_id' => $this->user_id,
+                'image_path' => 'test.jpg',
+            ]))
+            ->create();
+
+        $publishedArticle = PublishedArticleRepository::findById($article->id);
+
+        $this->assertEquals($article->id, $publishedArticle->getId());
+    }
+
+    public function test_存在しないエンティティをfindByIdしたときにnullが返ること(): void
+    {
+        $article_id = Uuid::generate();
+
+        $publishedArticle = PublishedArticleRepository::findById($article_id);
+
+        $this->assertNull($publishedArticle);
+    }
+
     public function test_存在しないエンティティをsaveしたときに新規に保存されること(): void
     {
         $article_id = Uuid::generate();
