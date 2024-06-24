@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence;
 
 use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Collection\ArticleTagList;
 use App\Domain\Article\Entities\ArticleImage;
+use App\Domain\Article\Entities\ArticleTag;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
@@ -36,6 +38,14 @@ class PublishedArticleRepository
                     id: $image->id
                 ),
                 $article->articleImageEloquent->all()
+            )),
+            tags: new ArticleTagList(array_map(
+                fn($tag) => new ArticleTag(
+                    user_id: $article->user_id,
+                    tag_name: $tag->tag_name,
+                    id: $tag->id
+                ),
+                $article->articleTagsEloquent->all()
             )),
             id: $article->article_id
         );
@@ -88,6 +98,7 @@ class PublishedArticleRepository
 
     public static function delete(string $article_id): void
     {
+        ArticleTagsEloquent::query()->where('article_id', $article_id)->delete();
         ArticleImageEloquent::query()->where('article_id', $article_id)->delete();
         ArticleDetailEloquent::query()->where('article_id', $article_id)->delete();
         ArticlePublishedEloquent::query()->where('article_id', $article_id)->delete();
