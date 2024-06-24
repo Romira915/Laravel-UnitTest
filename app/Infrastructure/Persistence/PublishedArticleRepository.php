@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence;
 
+use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Entities\ArticleImage;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
@@ -12,6 +14,28 @@ use App\Models\ArticlePublishedEloquent;
 
 class PublishedArticleRepository
 {
+    public static function findById(string $id): PublishedArticle
+    {
+        /** @var ArticlePublishedEloquent $article */
+        $article = ArticlePublishedEloquent::with('articleDetailEloquent', 'articleImageEloquent')->where('article_id', $id)->first();
+
+        return new PublishedArticle(
+            user_id: $article->user_id,
+            title: $article->articleDetailEloquent->title,
+            body: $article->articleDetailEloquent->body,
+            thumbnail_path: $article->articleDetailEloquent->thumbnail_path,
+            images: new ArticleImageList(array_map(
+                fn($image) => new ArticleImage(
+                    image_path: $image->image_path,
+                    user_id: $article->user_id,
+                    id: $image->id
+                ),
+                $article->articleImageEloquent->all()
+            )),
+            id: $article->article_id
+        );
+    }
+
     public static function save(PublishedArticle $article): void
     {
         ArticleEloquent::query()->upsert([
