@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Article\Collection;
 
-use App\Domain\Article\Entities\ArticleTag;
+use App\Domain\Article\ValueObject\ArticleTag;
 
 class ArticleTagList
 {
