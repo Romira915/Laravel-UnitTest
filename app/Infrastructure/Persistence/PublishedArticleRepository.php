@@ -14,10 +14,14 @@ use App\Models\ArticlePublishedEloquent;
 
 class PublishedArticleRepository
 {
-    public static function findById(string $id): PublishedArticle
+    public static function findById(string $id): ?PublishedArticle
     {
         /** @var ArticlePublishedEloquent $article */
         $article = ArticlePublishedEloquent::with('articleDetailEloquent', 'articleImageEloquent')->where('article_id', $id)->first();
+
+        if ($article === null) {
+            return null;
+        }
 
         return new PublishedArticle(
             user_id: $article->user_id,

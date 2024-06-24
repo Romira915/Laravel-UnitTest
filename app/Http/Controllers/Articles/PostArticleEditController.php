@@ -23,6 +23,10 @@ class PostArticleEditController extends Controller
         }
 
         $article = $this->publishedArticleRepository->findById($article_id);
+        if ($article === null) {
+            abort(404);
+        }
+
         $article->setTitle($request->title);
         $article->setBody($request->body);
         $this->publishedArticleRepository->save($article);
