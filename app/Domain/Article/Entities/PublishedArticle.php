@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Article\Entities;
 
 use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Collection\ArticleTagList;
 use App\Utils\Uuid;
 
 class PublishedArticle
@@ -25,6 +26,7 @@ class PublishedArticle
         private string $body,
         private string $thumbnail_path,
         private ArticleImageList $images,
+        private ArticleTagList $tags,
         ?string $id = null,
     )
     {

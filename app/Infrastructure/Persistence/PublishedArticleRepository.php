@@ -11,6 +11,7 @@ use App\Models\ArticleDetailEloquent;
 use App\Models\ArticleEloquent;
 use App\Models\ArticleImageEloquent;
 use App\Models\ArticlePublishedEloquent;
+use App\Models\ArticleTagsEloquent;
 
 class PublishedArticleRepository
 {
@@ -71,6 +72,18 @@ class PublishedArticleRepository
             ];
         }
         ArticleImageEloquent::query()->upsert($upsertValues, ['id'], ['id', 'article_id', 'user_id', 'image_path']);
+
+        ArticleTagsEloquent::query()->where('article_id', $article->getId())->delete();
+        $insertValues = [];
+        foreach ($article->getTags()->all() as $tag) {
+            $insertValues[] = [
+                'id' => $tag->getId(),
+                'article_id' => $article->getId(),
+                'user_id' => $article->getUserId(),
+                'tag_name' => $tag->getTag(),
+            ];
+        }
+        ArticleTagsEloquent::query()->insert($insertValues);
     }
 
     public static function delete(string $article_id): void

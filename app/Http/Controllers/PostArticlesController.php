@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Domain\Article\Collection\ArticleImageList;
+use App\Domain\Article\Collection\ArticleTagList;
 use App\Domain\Article\Entities\ArticleImage;
+use App\Domain\Article\Entities\ArticleTag;
 use App\Domain\Article\Entities\PublishedArticle;
 use App\Http\Requests\PostArticlesRequest;
 use App\Infrastructure\Persistence\PublishedArticleRepository;
@@ -30,7 +32,14 @@ class PostArticlesController extends Controller
                     user_id: $request->current_user_id,
                 ),
                 $request->image_paths
-            ))
+            )),
+            tags: new ArticleTagList(array_map(
+                fn($tag_name) => new ArticleTag(
+                    user_id: $request->current_user_id,
+                    tag_name: $tag_name,
+                ),
+                $request->tags
+            )),
         );
 
         $this->publishedArticleRepository->save($article);
